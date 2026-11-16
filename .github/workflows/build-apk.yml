@@ -1,0 +1,80 @@
+name: Build Signed Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Java 17 (Temurin)
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Configure Android SDK & Licenses
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -f "$SDKMANAGER" ]; then
+            SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -name "sdkmanager" | head -n 1)
+          fi
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+          "$SDKMANAGER" "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+
+      - name: Install Capacitor Dependencies & Add Android
+        run: |
+          npm install --no-audit --no-fund
+          npx cap add android
+
+      - name: Configure Android Manifest, Version & Adaptive Launcher Icons
+        run: |
+          python3 -m pip install pillow --break-system-packages --quiet || pip3 install pillow --quiet
+          python3 generate_icons.py
+          MANIFEST="android/app/src/main/AndroidManifest.xml"
+          BUILD_GRADLE="android/app/build.gradle"
+          sed -i 's/versionCode 1/versionCode 1/g' "$BUILD_GRADLE"
+          sed -i 's/versionName "1.0"/versionName "1.0.0"/g' "$BUILD_GRADLE"
+          sed -i 's/android:name=".MainActivity"/android:name=".MainActivity" android:screenOrientation="portrait"/g' "$MANIFEST"
+          sed -i 's/android:theme="@style\/AppTheme.NoActionBarLaunch"/android:theme="@android:style\/Theme.NoTitleBar.Fullscreen"/g' "$MANIFEST"
+          npx cap sync android
+
+      - name: Generate Release Keystore & Build Signed APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+          KEYSTORE_PATH="$GITHUB_WORKSPACE/release-key.jks"
+          keytool -genkeypair -v -keystore "$KEYSTORE_PATH" \
+            -alias html2appkey -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass android123 -keypass android123 \
+            -dname "CN=Shifting Generator, OU=Mobile, O=HTML2App, L=Jakarta, S=ID, C=ID"
+          UNSIGNED_APK=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          ZIPALIGN=$(find "$ANDROID_HOME/build-tools" -name "zipalign" | sort -V | tail -n 1)
+          APKSIGNER=$(find "$ANDROID_HOME/build-tools" -name "apksigner" | sort -V | tail -n 1)
+          "$ZIPALIGN" -v -p 4 "$UNSIGNED_APK" "$GITHUB_WORKSPACE/aligned.apk"
+          "$APKSIGNER" sign --ks "$KEYSTORE_PATH" --ks-key-alias html2appkey \
+            --ks-pass pass:android123 --key-pass pass:android123 \
+            --out "$GITHUB_WORKSPACE/shifting-generator-v1.0.0.apk" "$GITHUB_WORKSPACE/aligned.apk"
+
+      - name: Publish Signed APK to GitHub Releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="v1.0.0-${{ github.run_number }}"
+          gh release create "$TAG_NAME" "$GITHUB_WORKSPACE/shifting-generator-v1.0.0.apk" \
+            --title "Shifting Generator v1.0.0 (Build #${{ github.run_number }})" \
+            --notes "Compiled automatically by HTML2App Studio."
