@@ -1,0 +1,9 @@
+{
+  "appId": "com.techcorner.shiftinggenerator",
+  "appName": "Shifting Generator",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true
+  }
+}
