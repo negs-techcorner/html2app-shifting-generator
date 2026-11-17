@@ -100,11 +100,11 @@ h2{font-size:13px;margin:0 0 8px;color:var(--ac)}
 <div class="abt" id="about" hidden role="dialog" aria-modal="true" aria-label="Tentang aplikasi"><div class="abc2">
 <button class="abx" id="aboutx" type="button" aria-label="Tutup">✕</button>
 <div class="aav"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
-<div class="abg">● v1.72 · Developer</div>
+<div class="abg">● v1.84 · Developer</div>
 <h2 class="anm" style="color:var(--tx)">Nega Putra Riyanto</h2>
 <p class="asub">// Production Foreman · FP Division</p>
 <div class="agr"><div><small>Divisi</small><b>Further Processing</b></div><div><small>Perusahaan</small><b>PT. CPI Cicalengka</b></div><div><small>Role</small><b>Production Foreman</b></div><div><small>Bidang</small><b>IT · Self-taught</b></div></div>
-<div class="aap"><small>Aplikasi</small><b>Shifting Generator</b><span>// sistem rolling mingguan · v1.72 · 2026</span></div>
+<div class="aap"><small>Aplikasi</small><b>Shifting Generator</b><span>// sistem rolling mingguan · v1.84 · 2026</span></div>
 <div class="aft">Founder &amp; Creative Director · <b>Tech Corner</b></div>
 </div></div>
 <div id="toast">Tersalin ✓</div>
@@ -142,9 +142,9 @@ var FLA=[
 ];
 var MHW=[
  {name:"",offset:0,shifts:[
-  {people:["Tedi","Rizki"]},
-  {people:["Danar","Robi"]},
-  {people:["Ujang","Krismon"]}]}
+  {people:["Tedi","Rizki","Neneng (Support MHW)"]},
+  {people:["Danar","Robi","Dewi (Support MHW)"]},
+  {people:["Ujang","Krismon","Kristanti (Support MHW)"]}]}
 ];
 var FP=[
  {name:"Bowlcutter, Grinder, Unimix",offset:0,rp:true,shifts:[
@@ -162,11 +162,11 @@ var FP=[
  {name:"Sortir",offset:0,shifts:[
   {people:["Indika"]},
   {people:["Teti"]},
-  {people:["Dewi"]}]},
+  {people:["Riska"]}]},
  {name:"Cartoning",offset:0,shifts:[
-  {people:["Ina S","Jamal","Roma","Bella","Lia","Moh Wahyu","Kania"]},
-  {people:["M Rifki Z","Ade R","Asep S","Windy","Yesi","Yunita","Dedi R"]},
-  {people:["Perry G","Neneng","Kristanti","Dini","Rahma","Riska","Ikbal"]}]}
+  {people:["Ina S","Jamal","Roma","Bella","Lia","Kania"]},
+  {people:["M Rifki Z","Ade R","Windy","Yesi","Yunita","Dedi R"]},
+  {people:["Perry G","Dini","Rahma","Ikbal","Moh Wahyu","Asep S"]}]}
 ];
 /* Supporting: jam masuk awal bagian mengikuti Foreman (drum master, default 21.00).
    gaps = selisih menit dari shift ke shift berikutnya, sesuai jadwal asli (540 = 9 jam).
@@ -210,7 +210,7 @@ var SUP=[
    Dipasang di tim (MHW) atau di satu bagian saja (FP: Bowlcutter, Grinder, Unimix; Supporting: Foreman/KR). */
 var THUMB=[
  {name:"Op. Thumbling",offset:0,shifts:[
-  {people:["Sansan","Perry I","Egi"]},
+  {people:["Sansan","Indra","Egi"]},
   {people:["Dadi","Renal","Lyo"]},
   {people:["M Dendi","Deden S","Andi S"]}]}
 ];
@@ -234,20 +234,20 @@ var NF1=[
 var NF2=[
  {name:"Manual Breader & Input Nonforming",offset:0,shifts:[
   {people:["Raden","Ilham","Budi K","Fikri"]},
-  {people:["Indra","Ridho","Perry I","Rizal M","Alvi"]},
+  {people:["Ridho","Perry I","Rizal M","Alvi"]},
   {people:["M Rava","Asep K","Andri R"]}]},
  {name:"MD, CW & Koordinator Cartoning",offset:0,shifts:[
   {people:["Soni"]},
   {people:["Ade I"]},
   {people:["Dzikri M"]}]},
  {name:"Sortir",offset:0,shifts:[
-  {people:["Dewi"]},
+  {people:["Riska"]},
   {people:["Indika"]},
   {people:["Teti"]}]},
  {name:"Cartoning",offset:0,shifts:[
-  {people:["Perry G","Neneng","Kristanti","Dini","Rahma","Riska (Support MP)","Ikbal (Support MP)"]},
-  {people:["Ina S","Roma","Bella","Lia","Kania","Moh Wahyu (Support MP)","Jamal (Support MP)"]},
-  {people:["M Rifki Z","Ade R","Windy","Yesi","Yunita","Asep S (Support MP)","Dedi R (Support MP)"]}]}
+  {people:["Perry G","Moh Wahyu","Asep S","Dini","Rahma","Ikbal (Support MP)"]},
+  {people:["Ina S","Roma","Bella","Lia","Kania","Jamal (Support MP)"]},
+  {people:["M Rifki Z","Ade R","Windy","Yesi","Yunita","Dedi R (Support MP)"]}]}
 ];
 /* Daftar produk Forming (halaman Produk). Tambah/ubah produk di sini; gramasi terbaca otomatis dari nama (gr / kg). */
 var PRODUK=[
@@ -316,7 +316,7 @@ var SUPPLY={
 var TEAMS=[
  {id:"rheon",abc:true,label:"Rheon",title:"Berikut Jadwal tim Rheon",base:"2026-11-10",tof:0,groups:[{label:"MP Rheon",title:"Berikut Jadwal tim MP Rheon",sections:[0,1]},{label:"Packing Rheon",title:"Berikut Jadwal tim Packing Rheon",sections:[2,3]}],data:RHEON},
  {id:"fla",abc:true,label:"Fla",title:"Berikut Jadwal tim Fla",base:"2026-11-10",tof:0,data:FLA},
- {id:"mhw",abc:true,label:"MHW",title:"Berikut Jadwal tim MHW, Kawashima & IQF",nl:true,rp:true,hd:true,base:"2026-11-10",tof:0,data:MHW},
+ {id:"mhw",abc:true,label:"MHW",title:"Berikut Jadwal tim MHW, Kawashima & IQF",nl:true,rp:true,hd:true,sup:/\(Support MHW\)$/,supName:"Support MHW",base:"2026-11-10",tof:0,data:MHW},
  {id:"fp",abc:true,label:"FP",title:"Berikut Jadwal tim FP",base:"2026-11-10",tof:0,groups:[{label:"MP",title:"Berikut Jadwal tim MP",sections:[0,1]},{label:"MD, CW & Koordinator Cartoning",title:"Berikut Jadwal tim MD, CW & Koordinator Cartoning",hn:true,sections:[2]},{label:"Packing",title:"Berikut Jadwal tim Packing",sections:[3,4]}],data:FP},
  {id:"sup",label:"Support",title:"Berikut Jadwal Supporting",base:"2026-11-10",tof:0,data:SUP},
  {id:"thumb",abc:true,label:"Thumbling",title:"Berikut Jadwal tim Thumbling",base:"2026-11-14",tof:0,defOff:["Egi","Lyo","Andi S"],legacyDef:["Perry","Egi","Fikri","Lyo","Dendi","Andi S","Sansan"],data:THUMB},
@@ -382,29 +382,41 @@ function build(tm,idx){
     sh.forEach(function(x,i){if(!x.fixed)idx.push(i)});
     if(s.fixed||sh[j].fixed)a=sh[j].people;
     else{var c=idx.length,p=idx.indexOf(j);a=sh[idx[(((p-shift())%c)+c)%c]].people}
+    if(tm.sup){var sp=a.filter(isSup);a=a.filter(function(n){return !isSup(n)});
+      if((tm.rp||s.rp)&&a.length>1){var m0=a.length,k0=((shift()%m0)+m0)%m0;a=a.slice(k0).concat(a.slice(0,k0))}
+      return a.concat(sp)}
     if((tm.rp||s.rp)&&a.length>1){var m=a.length,k=((shift()%m)+m)%m;a=a.slice(k).concat(a.slice(0,k))}
     return a;
   }
+  function isSup(n){return !!(tm.sup&&tm.sup.test(n))}
   function mins(s,j,d){var sh=s.shifts[j];if(s.gaps){var m=MASTER+(tm.tof||0)+s.offset;for(var i=0;i<j;i++)m+=s.gaps[i];if(j==0&&s.lateAdd&&d&&d.getDay()!=1)m+=s.lateAdd;return ((m%1440)+1440)%1440}if(sh.t!=null)return (((sh.t+MASTER-1260+(tm.tof||0)+s.offset)%1440)+1440)%1440;return (MASTER+(tm.tof||0)+s.offset+480*j)%1440}
   function timeText(s,j,d){var m=mins(s,j,d),h=Math.floor(m/60),nt=s.shifts[j].night;return pad(h)+"."+pad(m%60)+((nt===undefined?h>=18:nt)?" ("+HARI[(d.getDay()+6)%7]+" Malam)":"")}
   function headText(d,ti){return (ti||tm.title)+(tm.nl?"\n":", ")+HARI[d.getDay()]+" "+d.getDate()+" "+BLN[d.getMonth()]+" "+d.getFullYear()}
 
   function shOn(sf,j){var k=sf.ab!=null?sf.ab:j;return !(tm.sh&&tm.sh[k]===false)}
   function cdata(){
-    var d=pd(tgt.value);
-    if(d.getDay()!=6)return tm.data;
-    return tm.data.map(function(s){
-      if(!(tm.hd||s.hd))return s;
-      var ppl=[],gaps=[];
-      s.shifts.forEach(function(x,j){group(s,j).forEach(function(n){ppl.push({n:n,ab:j});gaps.push(300)})});
-      return {name:s.name,offset:s.offset,fixed:true,gaps:gaps,shifts:ppl.map(function(n,i){return {night:i==0,people:[n.n],ab:n.ab}})};
+    var d=pd(tgt.value),sat=d.getDay()==6;
+    if(!sat&&!tm.sup)return tm.data;
+    var out=[];
+    tm.data.forEach(function(s){
+      var hdOn=sat&&(tm.hd||s.hd),hasSp=!!tm.sup&&s.shifts.some(function(x){return x.people.some(isSup)});
+      if(!hdOn&&!hasSp){out.push(s);return}
+      if(hdOn){
+        var ppl=[],gaps=[];
+        s.shifts.forEach(function(x,j){group(s,j).forEach(function(n){if(isSup(n))return;ppl.push({n:n,ab:j});gaps.push(300)})});
+        out.push({name:s.name,offset:s.offset,fixed:true,gaps:gaps,shifts:ppl.map(function(n,i){return {night:i==0,people:[n.n],ab:n.ab}})});
+      }else{
+        out.push(Object.assign({},s,{shifts:s.shifts.map(function(x){return Object.assign({},x,{people:x.people.filter(function(n){return !isSup(n)})})})}));
+      }
+      if(hasSp)out.push({name:tm.supName||"Support",strip:true,offset:s.offset,shifts:s.shifts.map(function(x){return {people:x.people.filter(isSup)}})});
     });
+    return out;
   }
   function info(){
     var a=[],b=[],t0=pd(tgt.value);
     var D=cdata();
     D[0].shifts.forEach(function(x,j){a.push(timeText(D[0],j,t0).split(" ")[0])});
-    if(D[1])D[1].shifts.forEach(function(x,j){b.push(timeText(D[1],j,t0).split(" ")[0])});
+    if(D[1]&&!tm.sup)D[1].shifts.forEach(function(x,j){b.push(timeText(D[1],j,t0).split(" ")[0])});
     q(".tinfo").textContent=(D[0].name?D[0].name+": ":"")+a.join(" · ")+(b.length?"  |  Bagian lain: "+b.join(" · "):"");
   }
   function view(){
@@ -425,7 +437,7 @@ function build(tm,idx){
           var t=document.createElement("div");t.className="t";t.textContent=timeText(s,j,d);c.appendChild(t);
           var w=document.createElement("div");w.className="chips";
           group(s,j).forEach(function(nm){
-            var b=document.createElement("button");b.className="chip"+(tm.off[nm]?" off":"");b.textContent=nm;
+            var b=document.createElement("button");b.className="chip"+(tm.off[nm]?" off":"");b.textContent=tm.sup?nm.replace(tm.sup,"").trim():nm;
             b.onclick=function(){tm.off[nm]=!tm.off[nm];view();save()};w.appendChild(b);
           });
           c.appendChild(w);
@@ -447,7 +459,7 @@ function build(tm,idx){
         o.push(timeText(s,j,d));
         var p=group(s,j).filter(function(x){return !tm.off[x]});
         if(!p.length)o.push("- (kosong)");
-        p.forEach(function(x){o.push("- "+x)});
+        p.forEach(function(x){o.push("- "+(tm.sup?x.replace(tm.sup,"").trim():x))});
         o.push("");
       });
       o.push("");
