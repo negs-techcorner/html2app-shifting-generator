@@ -100,11 +100,11 @@ h2{font-size:13px;margin:0 0 8px;color:var(--ac)}
 <div class="abt" id="about" hidden role="dialog" aria-modal="true" aria-label="Tentang aplikasi"><div class="abc2">
 <button class="abx" id="aboutx" type="button" aria-label="Tutup">✕</button>
 <div class="aav"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
-<div class="abg">● v1.84 · Developer</div>
+<div class="abg">● v1.86 · Developer</div>
 <h2 class="anm" style="color:var(--tx)">Nega Putra Riyanto</h2>
 <p class="asub">// Production Foreman · FP Division</p>
 <div class="agr"><div><small>Divisi</small><b>Further Processing</b></div><div><small>Perusahaan</small><b>PT. CPI Cicalengka</b></div><div><small>Role</small><b>Production Foreman</b></div><div><small>Bidang</small><b>IT · Self-taught</b></div></div>
-<div class="aap"><small>Aplikasi</small><b>Shifting Generator</b><span>// sistem rolling mingguan · v1.84 · 2026</span></div>
+<div class="aap"><small>Aplikasi</small><b>Shifting Generator</b><span>// sistem rolling mingguan · v1.86 · 2026</span></div>
 <div class="aft">Founder &amp; Creative Director · <b>Tech Corner</b></div>
 </div></div>
 <div id="toast">Tersalin ✓</div>
@@ -597,7 +597,11 @@ function mkProdukBlock(cfg){
     if(!sel.length){var tt=$("toast"),old=tt.textContent;tt.textContent="Belum ada produk dipilih";toast();setTimeout(function(){tt.textContent=old},1700);return}
     var d=pd($("mdate").value),L=["*Planning "+cfg.tag+", "+HARI[d.getDay()]+" "+d.getDate()+" "+BLP[d.getMonth()]+" "+d.getFullYear()+" :*",""];
     /* WhatsApp: daftar dibungkus ``` (huruf monospace) supaya titik dua selalu sejajar */
-    var rows=sel.map(function(s){return [items[s.id].name,s.q+" batch"]});
+    /* hasil salin Forming: sembunyikan kata "Chicken", dan kata "Nugget" pada Fiesta Stikie. Nonforming: singkatan nama (F., FM, HC, BGM) */
+    function cname(n){
+      if(cfg.tag==="Nonforming")return n.replace(/^Fiesta\s+/i,"F. ").replace(/^Family Mart\s+/i,"FM ").replace(/^Hangry Chicken\s+/i,"HC ").replace(/^Bakmi GM\s+/i,"BGM ").replace(/\s+/g," ").trim();
+      if(cfg.tag!=="Forming")return n;return n.replace(/\bChicken\s+/gi,"").replace(/\bStikie\s+Nugget\b/i,"Stikie").replace(/\s+/g," ").trim()}
+    var rows=sel.map(function(s){return [cname(items[s.id].name),s.q+" batch"]});
     var W=0;rows.forEach(function(r){W=Math.max(W,r[0].length)});
     L.push("```"+rows.map(function(r){return "• "+r[0]+new Array(W-r[0].length+2).join(" ")+": "+r[1]}).join("\n")+"```");
     copyText(L.join("\n"));
