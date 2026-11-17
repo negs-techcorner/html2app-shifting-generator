@@ -46,8 +46,8 @@ jobs:
           python3 generate_icons.py
           MANIFEST="android/app/src/main/AndroidManifest.xml"
           BUILD_GRADLE="android/app/build.gradle"
-          sed -i 's/versionCode 1/versionCode 1/g' "$BUILD_GRADLE"
-          sed -i 's/versionName "1.0"/versionName "1.0.0"/g' "$BUILD_GRADLE"
+          sed -i 's/versionCode 1/versionCode 8/g' "$BUILD_GRADLE"
+          sed -i 's/versionName "1.0"/versionName "1.8.1"/g' "$BUILD_GRADLE"
           sed -i 's/android:name=".MainActivity"/android:name=".MainActivity" android:screenOrientation="portrait"/g' "$MANIFEST"
           sed -i 's/android:theme="@style\/AppTheme.NoActionBarLaunch"/android:theme="@android:style\/Theme.NoTitleBar.Fullscreen"/g' "$MANIFEST"
           npx cap sync android
@@ -68,13 +68,13 @@ jobs:
           "$ZIPALIGN" -v -p 4 "$UNSIGNED_APK" "$GITHUB_WORKSPACE/aligned.apk"
           "$APKSIGNER" sign --ks "$KEYSTORE_PATH" --ks-key-alias html2appkey \
             --ks-pass pass:android123 --key-pass pass:android123 \
-            --out "$GITHUB_WORKSPACE/shifting-generator-v1.0.0.apk" "$GITHUB_WORKSPACE/aligned.apk"
+            --out "$GITHUB_WORKSPACE/shifting-generator-v1.8.1.apk" "$GITHUB_WORKSPACE/aligned.apk"
 
       - name: Publish Signed APK to GitHub Releases
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG_NAME="v1.0.0-${{ github.run_number }}"
-          gh release create "$TAG_NAME" "$GITHUB_WORKSPACE/shifting-generator-v1.0.0.apk" \
-            --title "Shifting Generator v1.0.0 (Build #${{ github.run_number }})" \
+          TAG_NAME="v1.8.1-${{ github.run_number }}"
+          gh release create "$TAG_NAME" "$GITHUB_WORKSPACE/shifting-generator-v1.8.1.apk" \
+            --title "Shifting Generator v1.8.1 (Build #${{ github.run_number }})" \
             --notes "Compiled automatically by HTML2App Studio."
